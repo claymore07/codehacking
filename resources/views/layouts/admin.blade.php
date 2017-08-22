@@ -328,10 +328,10 @@
 
 <!-- Page Content -->
 <div id="page-wrapper">
-    <div class="container-fluid">
+    <div class="container-fluid" style="direction: rtl; text-align: right">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"></h1>
+                <h1 class="page-header" ></h1>
 
                 @yield('content')
             </div>
