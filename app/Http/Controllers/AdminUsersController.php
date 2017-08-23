@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Photo;
 use App\Role;
 use App\User;
+use File;
 use Illuminate\Http\Request;
 
 class AdminUsersController extends Controller
@@ -15,6 +17,7 @@ class AdminUsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $userImagePath = 'images/users';
     public function index()
     {
         //
@@ -38,7 +41,7 @@ class AdminUsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \app\Http\Requests\CreateUserRequest
      * @return \Illuminate\Http\Response
      */
     public function store(CreateUserRequest $request)
@@ -48,12 +51,15 @@ class AdminUsersController extends Controller
         if ($file = $request->file('file')) {
 
             $name = time() . $file->getClientOriginalName() ;
-            $file->move('images/users', $name);
+            $file->move($this->userImagePath, $name);
 
             $photo = Photo::create(['path'=>$name]);
 
 
             $input['photo_id']= $photo->id;
+        }else{
+            $input['photo_id']= 1;
+
         }
 
         $input['password'] = bcrypt($request->password);
@@ -83,19 +89,46 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         //
-        return view('admin.users.edit');
+        $roles =Role::pluck('name', 'id')->all();
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \app\Http\Requests\CreateUserRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         //
+
+        $user = User::findOrFail($id);
+
+        $input = $request->all();
+        $photo = Photo::findOrFail($user->photo->id);
+        if($file = $request->file('file')){
+            $name = time().$file->getClientOriginalName();
+            $file->move($this->userImagePath,$name);
+
+
+            File::delete(substr($photo->path,1)); // remove the / from the path
+            $photo->update(['path'=>$name]);
+        }
+        $input =$request->all();
+        if(trim($request->password)==''){
+
+            //  $input = $request->except('password');
+            $input['password']=$user->password;
+        }else{
+
+            $input['password']=bcrypt($request->passowrd);
+        }
+
+        $user->update($input);
+        return redirect('/admin/users');
     }
 
     /**
