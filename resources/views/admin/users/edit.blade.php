@@ -41,9 +41,18 @@
         </div>
         <div class="form-group">
             {!! Form::token() !!}
-            {!! Form::submit('ویرایش کاربر ', ['class'=>'btn btn-primary']) !!}
-            {!! Form::reset('پاک کردن', ['class'=>'btn btn-danger']) !!}
-        </div>
+            {!! Form::submit('ویرایش کاربر ', ['class'=>'btn btn-primary pull-right']) !!}
+            {!! Form::reset('پاک کردن', ['class'=>'btn btn-warning  pull-right', 'style'=>'margin:0 20px']) !!}
+
         {!! Form::close() !!}
+        {!! Form::open(['method'=>'DELETE','action'=>['AdminUsersController@destroy', $user->id],'class'=>' pull-right']) !!}
+
+
+            <div class="form-group">
+                {!! Form::token() !!}
+                {!! Form::submit('حذف کاربر', ['class'=>'btn btn-danger']) !!}
+            </div>
+            {!! Form::close() !!}
+        </div>
     </div>
 @endsection

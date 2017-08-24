@@ -9,6 +9,7 @@ use App\Role;
 use App\User;
 use File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminUsersController extends Controller
 {
@@ -64,6 +65,7 @@ class AdminUsersController extends Controller
 
         $input['password'] = bcrypt($request->password);
         User::create($input);
+        Session::flash('o_user_created', 'ایجاد کاربر با موفقیت انجام شد!');
         return redirect('/admin/users');
 
     }
@@ -117,17 +119,20 @@ class AdminUsersController extends Controller
             File::delete(substr($photo->path,1)); // remove the / from the path
             $photo->update(['path'=>$name]);
         }
-        $input =$request->all();
-        if(trim($request->password)==''){
 
-            //  $input = $request->except('password');
-            $input['password']=$user->password;
+
+
+        if ($request->has('password')) {
+            $user->update($input);
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
         }else{
-
-            $input['password']=bcrypt($request->passowrd);
+            $input['password']=$user->password;
+            $user->update($input);
         }
 
-        $user->update($input);
+
+        Session::flash('o_user_updated', 'ویرایش کاربر با موفقیت انجام شد!');
         return redirect('/admin/users');
     }
 
@@ -140,5 +145,22 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+
+        /**** one way to remove user image file  **/
+       // File::delete(substr($user->photo->path,1)); // remove the / from the pat
+
+        /**** ohter way to remove user image file  **/
+
+        unlink(public_path().$user->photo->path);
+        $photo_id = $user->photo->id;
+
+        $user->delete();
+        Photo::findOrFail($photo_id)->delete();
+
+        Session::flash('o_user_delete', 'حذف کاربر با موفقیت انجام شد!');
+
+
+        return redirect('/admin/users');
     }
 }

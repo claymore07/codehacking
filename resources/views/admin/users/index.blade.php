@@ -1,20 +1,39 @@
 @extends('layouts.admin')
 
 @section('content')
-{{ \Carbon\Carbon::setLocale('fa') }}
 
-    <h1>Users</h1>
-      <table class="table table-striped table-hover">
+
+@if(Session::has('o_user_created'))
+    <div class="alert alert-success">
+        <p>{{session('o_user_created')}}</p>
+
+    </div>
+@endif
+@if(Session::has('o_user_updated'))
+    <div class="alert alert-success">
+        <p>{{session('o_user_updated')}}</p>
+
+    </div>
+@endif
+@if(Session::has('o_user_delete'))
+    <div class="alert alert-success">
+        <p>{{session('o_user_delete')}}</p>
+
+    </div>
+@endif
+    <h1>کاربران</h1>
+      <table class="table table-striped table-hover " style="direction: rtl; text-align: right">
           <thead>
             <tr>
-              <th>Id</th>
-                <th>Photo</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-                <th>status</th>
-              <th>Created</th>
-              <th>Updated</th>
+                <th class="th-right">Id</th>
+                <th class="th-right">تصویر</th>
+                <th class="th-right">نام</th>
+                <th class="th-right">رایان نامه</th>
+                <th class="th-right">نقش</th>
+                <th class="th-right">وضعیت</th>
+                <th class="th-right">ایجاد شده در</th>
+                <th class="th-right">بروزرسانی شده در</th>
+                <th class="th-right">ویرایش</th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +55,7 @@
                         </td>
                         <td>{{ $user->created_at->diffForHumans() }}</td>
                         <td>{{ $user->updated_at->diffForHumans() }}</td>
+                        <td><a href="{{route('users.destroy', $user->id)}}"><i class="fa fa-times alert-danger"></i> </a></td>
                     </tr>
                 @endforeach
           @endif
