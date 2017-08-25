@@ -6,7 +6,7 @@
     <h1>ویرایش کاربر</h1>
     <div class="col-sm-3 col-sm-push-9">
 
-        <img src="{{$user->photo->path}}" alt="{{$user->name}}"  class="img-responsive img-circle">
+        <img src="{{$user->photos()->first()->path}}" alt="{{$user->name}}"  class="img-responsive img-circle">
     </div>
     <div class="col-sm-9 col-sm-pull-3">
         @include('includes.includes')

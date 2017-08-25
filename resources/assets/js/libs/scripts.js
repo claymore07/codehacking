@@ -69,8 +69,15 @@ $(document).ready(function(){
     //    alert("This is a demo.\n :-)");
     //});
 
-
-
+    //user delete link action
+    $(function () {
+        $('.data-delete').on('click', function (e) {
+            if (!confirm('آیا مطمئن هستید که کاربر را می خواهید حذف کنید؟')) return;
+            e.preventDefault();
+            console.log('fuck');
+            $('#form-delete-' + $(this).data('form')).submit();
+        });
+    });
 
 
 

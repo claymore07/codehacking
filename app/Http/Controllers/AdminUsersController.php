@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostResquest;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Photo;
@@ -19,6 +20,7 @@ class AdminUsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected $userImagePath = 'images/users';
+    protected $defaultImage = 'user-defualt.png';
     public function index()
     {
         //
@@ -49,22 +51,23 @@ class AdminUsersController extends Controller
     {
         //
         $input = $request->all();
+        $input['password'] = bcrypt($request->password);
+        $user = User::create($input);
         if ($file = $request->file('file')) {
 
             $name = time() . $file->getClientOriginalName() ;
             $file->move($this->userImagePath, $name);
 
-            $photo = Photo::create(['path'=>$name]);
+            $user->photos()->create(['path'=>$name]);
 
 
-            $input['photo_id']= $photo->id;
+
         }else{
-            $input['photo_id']= 1;
+            $user->phtos()->create(['path'=>$this->defaultImage]);
 
         }
 
-        $input['password'] = bcrypt($request->password);
-        User::create($input);
+
         Session::flash('o_user_created', 'ایجاد کاربر با موفقیت انجام شد!');
         return redirect('/admin/users');
 
@@ -93,13 +96,14 @@ class AdminUsersController extends Controller
         //
         $roles =Role::pluck('name', 'id')->all();
         $user = User::findOrFail($id);
+
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \app\Http\Requests\CreateUserRequest  $request
+     * @param  CreatePostResquest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -110,7 +114,8 @@ class AdminUsersController extends Controller
         $user = User::findOrFail($id);
 
         $input = $request->all();
-        $photo = Photo::findOrFail($user->photo->id);
+        $photo = $user->photos()->first();
+
         if($file = $request->file('file')){
             $name = time().$file->getClientOriginalName();
             $file->move($this->userImagePath,$name);
@@ -145,6 +150,7 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+
         $user = User::findOrFail($id);
 
         /**** one way to remove user image file  **/
@@ -152,11 +158,11 @@ class AdminUsersController extends Controller
 
         /**** ohter way to remove user image file  **/
 
-        unlink(public_path().$user->photo->path);
-        $photo_id = $user->photo->id;
+        unlink(public_path().$user->photos()->first()->path);
+        $user->photos()->first()->delete();
 
         $user->delete();
-        Photo::findOrFail($photo_id)->delete();
+
 
         Session::flash('o_user_delete', 'حذف کاربر با موفقیت انجام شد!');
 

@@ -41,8 +41,11 @@
                @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td><img src="{{$user->photo ? $user->photo->path: ''}}" style="width: 50px; height: 50px;"></td>
-                        <td><a href="{{route('users.edit', $user->id)}}">{{ $user->name }}</a></td>
+                        <td><img src="{{$user->photos()->first() ? $user->photos()->first()->path: ''}}" style="width: 50px; height: 50px;"></td>
+                        <td><a href="{{route('users.edit', $user->id)}}">{{ $user->name }}</a>
+
+
+                        </td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role->name }}</td>
                         <td>
@@ -55,7 +58,11 @@
                         </td>
                         <td>{{ $user->created_at->diffForHumans() }}</td>
                         <td>{{ $user->updated_at->diffForHumans() }}</td>
-                        <td><a href="{{route('users.destroy', $user->id)}}"><i class="fa fa-times alert-danger"></i> </a></td>
+                        <td>{!! Form::open(['method'=>'DELETE','action'=>['AdminUsersController@destroy', $user->id],'id' => 'form-delete-users-' . $user->id]) !!}
+                            <a href="" class="data-delete" data-form="users-{{ $user->id }}">
+                                <i class="glyphicon glyphicon-remove icon-spacer"></i></a>
+                            {!! Form::close() !!}
+                        </td>
                     </tr>
                 @endforeach
           @endif
