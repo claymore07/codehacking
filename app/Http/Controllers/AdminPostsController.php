@@ -89,8 +89,10 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         //
+        $post = Post::findOrFail($id);
+        $categories = Category::pluck('name', 'id')->all();
 
-        return view('admin.posts.edit');
+        return view('admin.posts.edit', compact('post','categories'));
     }
 
     /**
@@ -103,6 +105,23 @@ class AdminPostsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = Auth::user();
+        $input = $request->all();
+
+        //$input['user_id']= $user->id;
+         $user->posts()->whereId($id)->first()->update($input);
+
+        $post =$user->posts()->whereId($id)->first();
+
+        if($file = $request->file('file')){
+            $name = time().$file->getClientOriginalName();
+            $file->move($this->postImagePath, $name);
+            $photo =$post->photos()->update(['path'=>$name]);
+
+        }
+
+        Session::flash('o_post_updated', 'مطلب ویرایش با موفقیت ذخیره شد.');
+        return redirect('/admin/posts');
     }
 
     /**
@@ -114,5 +133,12 @@ class AdminPostsController extends Controller
     public function destroy($id)
     {
         //
+        $post = Post::findOrFail($id);
+        // unlink(public_path().$post->photos()->first()->path);
+        /*$post->photos()->first()->delete();*/  // Know this action will be done on the post model delete function override
+        $post->delete();
+
+        Session::flash('o_post_deleted', 'حذف مطلب با موفقیت انجام شد!');
+        return redirect('/admin/posts');
     }
 }

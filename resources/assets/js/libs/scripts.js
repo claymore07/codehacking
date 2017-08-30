@@ -70,12 +70,38 @@ $(document).ready(function(){
     //});
 
     //user delete link action
+    function reset () {
+        $("#toggleCSS").attr("href", "css/libs.css");
+
+        alertify.set({
+            labels : {
+                ok     : "تایید",
+                cancel : "لغو"
+            },
+            delay : 5000,
+            buttonReverse : false,
+            buttonFocus   : "ok"
+        });
+    }
     $(function () {
         $('.data-delete').on('click', function (e) {
-            if (!confirm('آیا مطمئن هستید که کاربر را می خواهید حذف کنید؟')) return;
+            reset();
+            alertify.set({ delay: 15000 });
+            var action = $('#form-delete-' + $(this).data('form'));
             e.preventDefault();
-            console.log('fuck');
-            $('#form-delete-' + $(this).data('form')).submit();
+            alertify.confirm("آیا از حذف اطلاعات مربوطه مطمئن هستید؟", function (e) {
+
+                if (e) {
+
+                    console.log(action);
+                   action.submit();
+                }else{
+
+                    alertify.error("عملیات توسط کاربر لغو شد!");
+                }
+            });
+
+
         });
     });
 

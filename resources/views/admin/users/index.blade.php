@@ -21,6 +21,12 @@
 
     </div>
 @endif
+@if(Session::has('test'))
+    <div class="alert alert-success">
+        <p>{{session('test')}}</p>
+
+    </div>
+@endif
     <h1>کاربران</h1>
       <table class="table table-striped table-hover " style="direction: rtl; text-align: right">
           <thead>

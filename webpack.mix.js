@@ -15,6 +15,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
     .styles([
         'resources/assets/css/libs/blog-post.css',
+        'resources/assets/css/libs/alertify.core.css',
+        'resources/assets/css/libs/alertify.default.css',
         'resources/assets/css/libs/bootstrap.css',
         'resources/assets/css/libs/font-awesome.css',
         'resources/assets/css/libs/metisMenu.css',
@@ -29,6 +31,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/libs/sb-admin-2.js',
         'resources/assets/js/libs/scripts.js',
         'resources/assets/js/libs/bootstrap-filestyle.js',
-
+        'resources/assets/js/libs/alertify.min.js',
 
     ], './public/js/libs.js');
