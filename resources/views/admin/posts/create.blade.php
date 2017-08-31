@@ -34,4 +34,6 @@
         {!! Form::submit('ایجاد مطلب جدید', ['class'=>'btn btn-primary']) !!}
         {!! Form::reset('شروع مجدد', ['class'=>'btn btn-warning']) !!}
     </div>
+    {!! Form::token() !!}
+    {!! Form::close() !!}
 @endsection

@@ -164,7 +164,7 @@ class AdminUsersController extends Controller
         $user->delete();
 
 
-        Session::flash('o_user_delete', 'حذف کاربر با موفقیت انجام شد!');
+        Session::flash('o_user_deleted', 'حذف کاربر با موفقیت انجام شد!');
 
 
         return redirect('/admin/users');

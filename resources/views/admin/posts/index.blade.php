@@ -3,19 +3,7 @@
 
 
 @section('content')
-    @if(Session::has('o_post_created'))
-        <div class="alert alert-success">
-            <p>{{session('o_post_created')}}</p>
 
-        </div>
-    @endif
-
-    @if(Session::has('o_post_deleted'))
-        <div class="alert alert-success">
-            <p>{{session('o_post_deleted')}}</p>
-
-        </div>
-    @endif
     <h1>مطالب</h1>
     <table class="table table-striped table-hover" style="direction: rtl; text-align: right">
         <thead>
@@ -71,6 +59,25 @@
         </script>
         {{--<div class="alert alert-success">
             <p>{{session('o_post_updated')}}</p>
+
+        </div>--}}
+    @endif
+    @if(Session::has('o_post_created'))
+        <script>
+            alertify.success("{{session('o_post_created')}}");
+        </script>
+       {{-- <div class="alert alert-success">
+            <p>{{session('o_post_created')}}</p>
+
+        </div>--}}
+    @endif
+
+    @if(Session::has('o_post_deleted'))
+        <script>
+            alertify.success("{{session('o_post_deleted')}}");
+        </script>
+        {{--<div class="alert alert-success">
+            <p>{{session('o_post_deleted')}}</p>
 
         </div>--}}
     @endif

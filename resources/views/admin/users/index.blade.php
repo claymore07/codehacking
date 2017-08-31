@@ -3,30 +3,6 @@
 @section('content')
 
 
-@if(Session::has('o_user_created'))
-    <div class="alert alert-success">
-        <p>{{session('o_user_created')}}</p>
-
-    </div>
-@endif
-@if(Session::has('o_user_updated'))
-    <div class="alert alert-success">
-        <p>{{session('o_user_updated')}}</p>
-
-    </div>
-@endif
-@if(Session::has('o_user_delete'))
-    <div class="alert alert-success">
-        <p>{{session('o_user_delete')}}</p>
-
-    </div>
-@endif
-@if(Session::has('test'))
-    <div class="alert alert-success">
-        <p>{{session('test')}}</p>
-
-    </div>
-@endif
     <h1>کاربران</h1>
       <table class="table table-striped table-hover " style="direction: rtl; text-align: right">
           <thead>
@@ -74,4 +50,34 @@
           @endif
           </tbody>
         </table>
+@endsection
+@section('footer')
+    @if(Session::has('o_user_updated'))
+        <script>
+            alertify.success("{{session('o_user_updated')}}");
+        </script>
+        {{--<div class="alert alert-success">
+            <p>{{session('o_post_updated')}}</p>
+
+        </div>--}}
+    @endif
+    @if(Session::has('o_user_created'))
+        <script>
+            alertify.success("{{session('o_user_created')}}");
+        </script>
+        {{-- <div class="alert alert-success">
+             <p>{{session('o_post_created')}}</p>
+
+         </div>--}}
+    @endif
+
+    @if(Session::has('o_user_deleted'))
+        <script>
+            alertify.success("{{session('o_user_deleted')}}");
+        </script>
+        {{--<div class="alert alert-success">
+            <p>{{session('o_post_deleted')}}</p>
+
+        </div>--}}
+    @endif
 @endsection
