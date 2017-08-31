@@ -6,7 +6,7 @@
     <h1>ویرایش مطلب</h1>
     <div class="col-sm-3 col-sm-push-9">
 
-        <img src="{{$post->photos()->first()->path}}" alt="{{$post->title}}" class="img-responsive img-circle">
+        <img src="{{$post->photos()->first()? $post->photos()->first()->path:''}}" alt="{{$post->title}}" class="img-responsive img-circle">
     </div>
     <div class="col-sm-9 col-sm-pull-3">
         @include('includes.includes')

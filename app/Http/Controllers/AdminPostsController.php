@@ -7,6 +7,7 @@ use App\Http\Requests\CreatePostResquest;
 use App\Photo;
 use App\Post;
 use Auth;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -116,7 +117,15 @@ class AdminPostsController extends Controller
         if($file = $request->file('file')){
             $name = time().$file->getClientOriginalName();
             $file->move($this->postImagePath, $name);
-            $photo =$post->photos()->update(['path'=>$name]);
+            if($post->photos()->count() > 0) {
+                if (File::exists(public_path() . $post->photos()->first()->path)) {
+                    unlink(public_path() . $post->photos()->first()->path);
+                }
+                $photo =$post->photos()->update(['path'=>$name]);
+            }else{
+                $photo =$post->photos()->create(['path'=>$name]);
+            }
+
 
         }
 

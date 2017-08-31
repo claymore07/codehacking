@@ -63,7 +63,8 @@ class AdminUsersController extends Controller
 
 
         }else{
-            $user->phtos()->create(['path'=>$this->defaultImage]);
+            File::copy($this->userImagePath.'/'.$this->defaultImage,$this->userImagePath.'/'.time().$this->defaultImage);
+            $user->photos()->create(['path'=>time().$this->defaultImage]);
 
         }
 
@@ -120,9 +121,14 @@ class AdminUsersController extends Controller
             $name = time().$file->getClientOriginalName();
             $file->move($this->userImagePath,$name);
 
-
-            File::delete(substr($photo->path,1)); // remove the / from the path
-            $photo->update(['path'=>$name]);
+            if($user->photos()->count()>0) {
+                if (File::exists(public_path() . $user->photos()->first()->path)) {
+                    File::delete(substr($photo->path, 1)); // remove the / from the path
+                }
+                $photo->update(['path' => $name]);
+            }else{
+                $photo =$user->photos()->create(['path'=>$name]);
+            }
         }
 
 
@@ -157,10 +163,13 @@ class AdminUsersController extends Controller
        // File::delete(substr($user->photo->path,1)); // remove the / from the pat
 
         /**** ohter way to remove user image file  **/
+        if($user->photos()->count()>0) {
+            if (File::exists(public_path() . $user->photos()->first()->path)) {
+                unlink(public_path() . $user->photos()->first()->path);
+            }
 
-        unlink(public_path().$user->photos()->first()->path);
-        $user->photos()->first()->delete();
-
+            $user->photos()->first()->delete();
+        }
         $user->delete();
 
 
