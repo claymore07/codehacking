@@ -12,8 +12,65 @@ namespace App{
 /**
  * App\Category
  *
+ * @property int $id
+ * @property string $name
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Post[] $posts
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Category whereUpdatedAt($value)
  */
 	class Category extends \Eloquent {}
+}
+
+namespace App{
+/**
+ * App\Comment
+ *
+ * @property int $id
+ * @property int $post_id
+ * @property int $user_id
+ * @property int $is_active
+ * @property string $body
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Post $post
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CommentReply[] $replies
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment wherePostId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereUserId($value)
+ */
+	class Comment extends \Eloquent {}
+}
+
+namespace App{
+/**
+ * App\CommentReply
+ *
+ * @property int $id
+ * @property int $comment_id
+ * @property int $user_id
+ * @property int $is_active
+ * @property string $body
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property-read \App\Comment $comment
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereCommentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereUserId($value)
+ */
+	class CommentReply extends \Eloquent {}
 }
 
 namespace App{
@@ -63,6 +120,7 @@ namespace App{
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \App\Category $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
  * @property-read \App\Photo $photo
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Photo[] $photos
  * @property-read \App\User $user

@@ -8358,3 +8358,7 @@ button.close {
   text-align: right;
 }
 
+.comment-reply {
+  display: none;
+}
+

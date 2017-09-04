@@ -15,6 +15,7 @@
             <th class="text-right">نویسنده</th>
             <th class="text-right">دسته بندی</th>
             <th class="text-right">وضعیت نمایش</th>
+            <th class="text-right">نظرات</th>
             <th class="text-right">ایجاد شد ه در</th>
             <th class="text-right">بروزرسانی شد ه در</th>
             <th class="text-right">ابزار ویرایش</th>
@@ -34,15 +35,15 @@
                 @else
                     <td class="alert-success">نمایش</td>
                 @endif
-
+                <td><a href="{{route('comments.show', $post->id)}}">نظرات</a></td>
                 <td>{{$post->created_at->diffForHumans()}}</td>
                 <td>{{$post->updated_at->diffForHumans()}}</td>
                 <td>
-                    {!! Form::open(['method'=>'DELETE','action'=>['AdminPostsController@destroy', $post->id],'id' => 'form-delete-posts-' . $post->id]) !!}
-                    <a href="" class="data-delete" data-form="posts-{{ $post->id }}">
+                    {!! Form::open(['method'=>'DELETE','action'=>['AdminPostsController@destroy', $post->id],'id' => 'form-delete-posts-' . $post->id, 'style'=>'float:right']) !!}
+                    <a href="" class="data-delete" data-form="posts-{{ $post->id }}" style="color: #a94442;">
                         <i class="glyphicon glyphicon-remove icon-spacer"></i></a>
                     {!! Form::close() !!}
-
+                    <a href="{{route('home.post', $post->id)}}" style="margin-right: 10px"><i class="glyphicon glyphicon-modal-window"></i></a>
                 </td>
             </tr>
         @endforeach

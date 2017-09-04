@@ -20,14 +20,30 @@ class Post extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+
+
+
+
     public function category(){
         return $this->belongsTo('App\Category');
     }
+
+
+
+
+
 
     // polymorphic m2m with photo
     public function photos(){
         return $this->morphMany('App\Photo', 'photoable');
     }
+
+    public function comments(){
+        return $this->hasMany('App\Comment');
+    }
+
+
+
     public function delete()
     {
         if($this->photos()->count() > 0) {

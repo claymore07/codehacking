@@ -76,9 +76,17 @@ class AdminPostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function show($id)
     {
         //
+        $post = Post::findOrFail($id);
+        $categories = Category::all();
+        $comments = $post->comments()->whereIsActive(1)->get();
+
+
+        return view('post', compact('post', 'categories','comments'));
     }
 
     /**
