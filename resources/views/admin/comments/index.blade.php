@@ -24,7 +24,7 @@
                 <tr>
                     <td>{{$comment->id}}</td>
                     <td>{{$comment->user->name}}</td>
-                    <td><a href="{{route('home.post', $comment->post->id)}}">{{$comment->post->title}}</a></td>
+                    <td><a href="{{route('home.post', $comment->post->slug)}}">{{$comment->post->title}}</a></td>
 
                     <td><a href="{{route('comments.edit', $comment->id)}}">{{str_limit($comment->body, 50, $end =' ...')}}</a></td>
                     <td><a href="{{route('replies.show', $comment->id)}}">پاسخ ها</a></td>

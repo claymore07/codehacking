@@ -57,16 +57,20 @@ namespace App{
  * @property int $id
  * @property int $comment_id
  * @property int $user_id
+ * @property int $post_id
  * @property int $is_active
  * @property string $body
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \App\Comment $comment
+ * @property-read \App\Post $post
+ * @property-read \App\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereBody($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereCommentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply wherePostId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\CommentReply whereUserId($value)
  */
@@ -114,6 +118,7 @@ namespace App{
  * @property int $user_id
  * @property int $category_id
  * @property string $title
+ * @property string|null $slug
  * @property string $body
  * @property int $is_active
  * @property string|null $deleted_at
@@ -124,12 +129,14 @@ namespace App{
  * @property-read \App\Photo $photo
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Photo[] $photos
  * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereBody($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Post whereUserId($value)

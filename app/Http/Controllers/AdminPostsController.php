@@ -10,6 +10,7 @@ use Auth;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 class AdminPostsController extends Controller
 {
@@ -77,11 +78,12 @@ class AdminPostsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
-    public function show($id)
+ // renders the post view page on website
+    public function show($slug)
     {
         //
-        $post = Post::findOrFail($id);
+        $post = Post::findBySlugOrFail($slug);
+        //return $post->comments;
         $categories = Category::all();
         $comments = $post->comments()->whereIsActive(1)->get();
 
