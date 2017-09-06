@@ -73,7 +73,7 @@
         @foreach($comments as $comment)
             <div class="media" style="direction: rtl">
                 <a class="pull-right" href="#">
-                    <img class="media-object" src="{{$comment->user->photos()->first()->path}}"
+                    <img class="media-object" src="{{$comment->user->gravatar}}"
                          alt="{{$comment->user->name}}" style="height: 64px; width: 64px">
                 </a>
                 <div class="media-body">

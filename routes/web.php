@@ -29,7 +29,7 @@ Route::group(['middleware'=>'admin'], function(){
 
     Route::resource('admin/comments', 'PostsCommentsController');
 
-    Route::resource('admin/comment /replies', 'CommentRepliesController');
+    Route::resource('admin/comment/replies', 'CommentRepliesController');
 
 
     Route::get('/admin', function (){

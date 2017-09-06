@@ -50,7 +50,11 @@
         </tbody>
     </table>
 
-
+<div class="row" style="direction: ltr">
+    <div class="col-sm-6 center-block">
+        {{$posts->links('vendor.pagination.custom')}}
+    </div>
+</div>
 
 @endsection
 @section('footer')

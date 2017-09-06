@@ -47,6 +47,24 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany('App\Post');
     }
+    public function getGravatarAttribute(){
+
+        $hash = md5(strtolower(trim($this->attributes['email'])));
+// Craft a potential url and test its headers
+
+        $uri = 'http://www.gravatar.com/avatar/' . $hash . '?d=404';
+        $headers = @get_headers($uri);
+        if (!preg_match("|200|", $headers[0])) {
+            return $this->photos()->first()->path;
+        } else {
+            return "http://www.gravatar.com/avatar/$hash";
+        }
+
+
+
+    }
+
+
     public function delete()
     {
         foreach ($this->posts as $post){
