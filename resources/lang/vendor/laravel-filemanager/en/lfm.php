@@ -61,6 +61,7 @@ return [
     'btn-crop'          => 'برش',
     'btn-cancel'        => 'انصراف',
     'btn-resize'        => 'تغییر اندازه',
+    'btn-copy-crop'     => 'برش و کپی',
 
     'resize-ratio'      => 'نسبت:',
     'resize-scaled'     => 'تصویر مفیاس شده:',
