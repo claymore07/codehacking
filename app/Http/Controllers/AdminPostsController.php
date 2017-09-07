@@ -27,7 +27,7 @@ class AdminPostsController extends Controller
     {
         //
 
-        $posts = Post::paginate(1);
+        $posts = Post::paginate(6);
         return view('admin.posts.index', compact('posts'));
     }
 

@@ -10,6 +10,7 @@
     </div>
     <div class="col-sm-9 col-sm-pull-3">
         @include('includes.includes')
+        @include('includes.tinyeditor')
 
         {!! Form::model($post,['action'=>['AdminPostsController@update', $post->id], 'method'=>'PUT', 'files'=>true]) !!}
 

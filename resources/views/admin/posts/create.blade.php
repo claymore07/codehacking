@@ -5,7 +5,7 @@
 @section('content')
     <h1>انتشار مطلب جدید</h1>
     @include('includes.includes')
-
+    @include('includes.tinyeditor')
     {!! Form::open(['action'=>'AdminPostsController@store', 'method'=>'POST', 'files'=>true]) !!}
 
     <div class="form-group">
@@ -37,3 +37,4 @@
     {!! Form::token() !!}
     {!! Form::close() !!}
 @endsection
+

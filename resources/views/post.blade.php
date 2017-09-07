@@ -28,7 +28,7 @@
 
     <!-- Post Content -->
     <p class="lead text-justify">
-        {{$post->body}}
+        {!! $post->body !!}
     </p>
     <hr>
 

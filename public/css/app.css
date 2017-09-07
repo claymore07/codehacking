@@ -8362,3 +8362,8 @@ button.close {
   display: none;
 }
 
+span.mce-txt {
+  direction: rtl;
+  text-align: right;
+}
+
